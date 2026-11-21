@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gallery — Karina</title>
+<meta name="description" content="Karina — wedding photographer in Istanbul. Timeless, cinematic black-and-white love stories.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23000'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='Georgia,serif' font-size='42' fill='%23fff'%3EK%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=Pinyon+Script&family=Viaoda+Libre&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<nav class="nav">
+  <a href="./index.html" class="logo">Karina</a>
+  <ul>
+    <li><a href="./index.html">Home</a></li>
+    <li><a href="./gallery.html" class="active" aria-current="page">Gallery</a></li>
+    <li><a href="./about.html">About</a></li>
+    <li><a href="./contact.html">Contact</a></li>
+  </ul>
+  <button class="burger" aria-label="Open menu">&#9776;</button>
+</nav>
+<div class="overlay" aria-label="Menu">
+  <button class="close" aria-label="Close menu">&times;</button>
+  <a href="./index.html">Home</a><a href="./gallery.html">Gallery</a><a href="./about.html">About</a><a href="./contact.html">Contact</a>
+</div>
+
+<header class="page-head reveal"><p class="eyebrow">Portfolio</p><h1 class="serif">Gallery</h1><p class="script">moments that stay</p></header>
+<main class="masonry">
+    <figure data-i="0"><img data-src="./images/wedding-01.jpg" alt="Wedding photograph 1" width="800" height="1100"></figure>
+    <figure data-i="1"><img data-src="./images/wedding-02.jpg" alt="Wedding photograph 2" width="800" height="560"></figure>
+    <figure data-i="2"><img data-src="./images/wedding-03.jpg" alt="Wedding photograph 3" width="800" height="1000"></figure>
+    <figure data-i="3"><img data-src="./images/wedding-04.jpg" alt="Wedding photograph 4" width="800" height="620"></figure>
+    <figure data-i="4"><img data-src="./images/wedding-05.jpg" alt="Wedding photograph 5" width="800" height="900"></figure>
+    <figure data-i="5"><img data-src="./images/wedding-06.jpg" alt="Wedding photograph 6" width="800" height="560"></figure>
+    <figure data-i="6"><img data-src="./images/wedding-07.jpg" alt="Wedding photograph 7" width="800" height="1050"></figure>
+    <figure data-i="7"><img data-src="./images/wedding-08.jpg" alt="Wedding photograph 8" width="800" height="640"></figure>
+    <figure data-i="8"><img data-src="./images/wedding-09.jpg" alt="Wedding photograph 9" width="800" height="980"></figure>
+    <figure data-i="9"><img data-src="./images/wedding-10.jpg" alt="Wedding photograph 10" width="800" height="560"></figure>
+    <figure data-i="10"><img data-src="./images/wedding-11.jpg" alt="Wedding photograph 11" width="800" height="1000"></figure>
+    <figure data-i="11"><img data-src="./images/wedding-12.jpg" alt="Wedding photograph 12" width="800" height="700"></figure>
+</main>
+<div class="lightbox" role="dialog" aria-label="Photo viewer">
+  <button class="lb-close" aria-label="Close">&times;</button>
+  <button class="lb-prev" aria-label="Previous photo">&#8249;</button>
+  <img alt="Enlarged wedding photograph">
+  <button class="lb-next" aria-label="Next photo">&#8250;</button>
+  <span class="lb-count"></span>
+</div>
+<footer><span>&copy; 2026 Karina Photography &middot; Istanbul</span><span><a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a></span></footer>
+<button class="totop" aria-label="Back to top">&uarr;</button>
+<script src="./main.js"></script>
+<script>
+const figs=[...document.querySelectorAll('.masonry figure')];
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const im=e.target.querySelector('img');im.src=im.dataset.src;im.onload=()=>im.classList.add('loaded');io.unobserve(e.target);}}),{rootMargin:'200px'});
+figs.forEach(f=>io.observe(f));
+const lb=document.querySelector('.lightbox'),lbImg=lb.querySelector('img'),cnt=lb.querySelector('.lb-count');let cur=0;
+const show=i=>{cur=(i+figs.length)%figs.length;lbImg.style.opacity=0;setTimeout(()=>{lbImg.src=figs[cur].querySelector('img').dataset.src;lbImg.onload=()=>lbImg.style.opacity=1;},150);cnt.textContent=(cur+1)+' / '+figs.length;};
+figs.forEach((f,i)=>f.addEventListener('click',()=>{show(i);lb.classList.add('open');}));
+lb.querySelector('.lb-close').onclick=()=>lb.classList.remove('open');
+lb.querySelector('.lb-prev').onclick=()=>show(cur-1);lb.querySelector('.lb-next').onclick=()=>show(cur+1);
+lb.addEventListener('click',e=>{if(e.target===lb)lb.classList.remove('open');});
+addEventListener('keydown',e=>{if(!lb.classList.contains('open'))return;if(e.key==='Escape')lb.classList.remove('open');if(e.key==='ArrowRight')show(cur+1);if(e.key==='ArrowLeft')show(cur-1);});
+</script>
+</body>
+</html>
